@@ -28,8 +28,14 @@ nvim+Mason: `MasonInstall haskell-language-server`
 
 There is also plugin, maybe I should test it. # TODO
 
-# Run
+## Run
 
 `cabal test`
 
-TODO
+### How?
+
+Some old [unit tests integration to cabal.](https://github.com/kazu-yamamoto/unit-test-example/blob/master/markdown/en/tutorial.md)
+The guide is a little bit old but both test frameworks look good.
+
+
+

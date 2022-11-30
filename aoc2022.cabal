@@ -62,6 +62,7 @@ library
 
     -- Modules exported by the library.
     exposed-modules:  MyLib
+                      Day00
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -104,3 +105,13 @@ test-suite aoc2022-test
     build-depends:
         base ^>=4.17.0.0,
         aoc2022
+
+
+Test-Suite doctest
+  Type:                 exitcode-stdio-1.0
+  Default-Language:     GHC2021
+  HS-Source-Dirs:       test
+  Ghc-Options:          -threaded -Wall
+  Main-Is:              doctests.hs
+  Build-Depends:        base
+                      , doctest >= 0.9.3
