@@ -13,14 +13,17 @@ Alternatively, it can be install by:
 ## Compiler and Cabal (Haskell project manager)
 
 ```
-ghcup install ghc 9.4.2
-ghcup set ghc 9.4.2
+ghcup install ghc 9.2.4
+ghcup set ghc 9.2.4
 ghcup install cabal latest
 cabal update
+cabal install cabal-install
+cabal install doctest
 ghcup install hls latest
 ```
 
-Note: ghc 9.4.3 (latest) ins't supported by latest language server (1.8.0)
+Note: ghc 9.4.3 (latest) and 9.2.5 isn't supported by latest language server (1.8.0)
+Note: hls with 9.4.2 doesn't support multiple plugins -> ghs==9.2.4
 
 ## Editor (NVim) intergration
 
@@ -30,7 +33,12 @@ There is also plugin, maybe I should test it. # TODO
 
 ## Run
 
+`cabal build --write-ghc-environment-files=always`
 `cabal test`
+
+or
+
+`doctest src/day01.hs`
 
 ### How?
 

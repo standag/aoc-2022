@@ -115,7 +115,4 @@ Test-Suite doctest
   HS-Source-Dirs:       test
   Ghc-Options:          -threaded -Wall
   Main-Is:              doctests.hs
-  Build-Depends:        base
-                      , aoc2022
-                      , doctest >= 0.9.3
-                      , split >= 0.2.3.5
+  Build-Depends:        base, aoc2022, doctest >= 0.9.3, split >= 0.2.3.5
