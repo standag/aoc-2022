@@ -1,13 +1,13 @@
 module Day01 (solvePartOne, solvePartTwo) where
 
-import Data.List.Split
 import Data.List
+import Data.List.Split
 
 -- |
 -- Solve part one.
 --
 -- >>> solvePartOne
--- 68467 
+-- 68467
 solvePartOne :: IO Int
 solvePartOne = solvePartOne' <$> readInputFile
 
@@ -38,5 +38,3 @@ readInputFile = readFile "input/day01.txt"
 
 parse :: String -> [[Int]]
 parse xs = map (map read) $ splitOn [""] $ lines xs
-
-
