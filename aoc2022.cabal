@@ -72,7 +72,7 @@ library
     -- other-extensions:
 
     -- Other library packages from which modules are imported.
-    build-depends:    base ^>=4.17.0.0
+    build-depends:    base ^>=4.16.0.0, split == 0.2.3.5
 
     -- Directories containing source files.
     hs-source-dirs:   src
@@ -80,32 +80,32 @@ library
     -- Base language which the package is written in.
     default-language: GHC2021
 
-test-suite aoc2022-test
-    -- Import common warning flags.
-    import:           warnings
-
-    -- Base language which the package is written in.
-    default-language: GHC2021
-
-    -- Modules included in this executable, other than Main.
-    -- other-modules:
-
-    -- LANGUAGE extensions used by modules in this package.
-    -- other-extensions:
-
-    -- The interface type and version of the test suite.
-    type:             exitcode-stdio-1.0
-
-    -- Directories containing source files.
-    hs-source-dirs:   test
-
-    -- The entrypoint to the test suite.
-    main-is:          Main.hs
-
-    -- Test dependencies.
-    build-depends:
-        base ^>=4.17.0.0,
-        aoc2022
+-- test-suite aoc2022-test
+--     -- Import common warning flags.
+--     import:           warnings
+-- 
+--     -- Base language which the package is written in.
+--     default-language: GHC2021
+-- 
+--     -- Modules included in this executable, other than Main.
+--     -- other-modules:
+-- 
+--     -- LANGUAGE extensions used by modules in this package.
+--     -- other-extensions:
+-- 
+--     -- The interface type and version of the test suite.
+--     type:             exitcode-stdio-1.0
+-- 
+--     -- Directories containing source files.
+--     hs-source-dirs:   test
+-- 
+--     -- The entrypoint to the test suite.
+--     main-is:          Main.hs
+-- 
+--     -- Test dependencies.
+--     build-depends:
+--         base ^>=4.17.0.0,
+--         aoc2022
 
 
 Test-Suite doctest
@@ -116,3 +116,4 @@ Test-Suite doctest
   Main-Is:              doctests.hs
   Build-Depends:        base
                       , doctest >= 0.9.3
+                      , split >= 0.2.3.5

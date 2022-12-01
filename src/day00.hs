@@ -14,10 +14,10 @@ solve_part_one = readFile "input/day00.txt"
 -- >>> solve_part_two
 -- 10
 solve_part_two :: IO Int
-solve_part_two = sum <$> (map (\x -> read x :: Int) <$> (words <$> (solve_part_one)))
--- solve_part_two = do
---                   content <- readFile "input/day00.txt"
---                   let x1 = words $ content
---                   let x2 = map (\x -> read x :: Int) x1
---                   let x3 = sum x2
---                   return x3
+-- solve_part_two = sum <$> (map (\x -> read x :: Int) <$> (words <$> (solve_part_one)))
+solve_part_two = do
+  content <- readFile "input/day00.txt"
+  let x1 = words $ content
+  let x2 = map (\x -> read x :: Int) x1
+  let x3 = sum x2
+  return x3
