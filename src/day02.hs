@@ -1,13 +1,13 @@
-module Day0X (solvePartOne, solvePartTwo) where
+module Day02 (solvePartOne, solvePartTwo) where
 
 inputFile :: IO String
-inputFile = readFile "input/day0x.txt"
+inputFile = readFile "input/day02.txt"
 
 -- |
 -- Solve part one.
 --
 -- >>> solvePartOne
---
+-- ()
 solvePartOne :: ()
 solvePartOne = ()
 
@@ -15,7 +15,7 @@ solvePartOne = ()
 -- Pure solution for part one.
 --
 -- >>> solvePartOne'
---
+-- ()
 solvePartOne' :: ()
 solvePartOne' = ()
 
@@ -23,7 +23,7 @@ solvePartOne' = ()
 -- Solve part two.
 --
 -- >>> solvePartTwo
---
+-- ()
 solvePartTwo :: ()
 solvePartTwo = ()
 
@@ -31,6 +31,6 @@ solvePartTwo = ()
 -- Pure solution for part two.
 --
 -- >>> solvePartTwo'
---
+-- ()
 solvePartTwo' :: ()
 solvePartTwo' = ()
