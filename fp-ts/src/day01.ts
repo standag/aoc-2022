@@ -3,7 +3,7 @@ import * as RNA from "fp-ts/ReadonlyNonEmptyArray";
 import * as S from "fp-ts/string";
 import * as N from "fp-ts/number";
 import * as E from "fp-ts/lib/Either";
-import { getFileContent, stringToInt } from "./lib";
+import { getFileContent, stringToInt, RNAsum as sum } from "./lib";
 import * as TE from "fp-ts/lib/TaskEither";
 
 type ParsedNumbers = RNA.ReadonlyNonEmptyArray<
@@ -48,7 +48,6 @@ const parse = (lines: string) =>
     )
   );
 
-const sum = RNA.reduce(0, (a: number, b: number) => a + b);
 
 const subSum = (numbers: ParsedNumbers): RNA.ReadonlyNonEmptyArray<number> =>
   pipe(numbers, RNA.map(sum));

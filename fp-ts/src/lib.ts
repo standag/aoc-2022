@@ -1,6 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import * as E from "fp-ts/lib/Either";
+import * as RNA from "fp-ts/lib/ReadonlyNonEmptyArray";
 import fs from "fs";
 import { promisify } from "util";
 
@@ -20,3 +21,5 @@ export const stringToInt = (n: string) =>
       () => `error: cannot parse ${n}`
     )
   );
+
+export const RNAsum = RNA.reduce(0, (a: number, b: number) => a + b);
