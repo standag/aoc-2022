@@ -3,7 +3,6 @@ import * as E from "fp-ts/lib/Either";
 import * as S from "fp-ts/lib/string";
 import * as RNA from "fp-ts/lib/ReadonlyNonEmptyArray";
 import * as TE from "fp-ts/lib/TaskEither";
-import * as RTU from "fp-ts/lib/ReadonlyTuple";
 import { match } from "ts-pattern";
 import { getFileContent, RNAsum } from "./lib";
 
@@ -55,26 +54,11 @@ const parseGame = (raw: string) =>
 
 const parseGameV2 = (raw: string) =>
   pipe(
-    raw,
-    S.split(" "),
-    // -> [E<A>, E<B>]
-    (x) =>
-      [parseRPS(x[0]), parseGameStrategy(x[1])] as readonly [
-        E.Either<string, RPS>,
-        E.Either<string, GameState>
-      ],
-    // -> E<[A, E<B>]>
-    RTU.sequence(E.Applicative),
-    E.map(
-      flow(
-        // -> [E<B>, A]
-        (x) => [x[1], x[0]] as readonly [E.Either<string, GameState>, RPS],
-        // -> E[B, A]
-        RTU.sequence(E.Applicative)
-      )
-    ),
-    // E<E<[B, A]>> -> E<[B, A]>
-    E.flatten,
+    E.Do,
+    E.let("split", () => pipe(raw, S.split(" "))), // let for pure
+    E.bind("opponent_play", ({ split }) => pipe(split, RNA.head, parseRPS)),
+    E.bind("strategy", ({ split }) => pipe(split, RNA.last, parseGameStrategy)),
+    E.map(({ opponent_play, strategy }) => [strategy, opponent_play] as const),
     E.chain(chooseRPS)
   );
 
@@ -111,35 +95,18 @@ const chooseRPS = (x: readonly [GameState, RPS]) =>
     match(x)
       .when(
         (x) => x[0] == GameState.Draw,
-        () => [x[1], x[1]] as [RPS, RPS]
+        () => [x[1], x[1]]
       )
       // Rock
-      .with(
-        [GameState.Lose, RPS.Rock],
-        () => [RPS.Rock, RPS.Scissors] as [RPS, RPS]
-      )
-      .with(
-        [GameState.Win, RPS.Rock],
-        () => [RPS.Rock, RPS.Paper] as [RPS, RPS]
-      )
+      .with([GameState.Lose, RPS.Rock], () => [RPS.Rock, RPS.Scissors])
+      .with([GameState.Win, RPS.Rock], () => [RPS.Rock, RPS.Paper])
       // Paper
-      .with(
-        [GameState.Lose, RPS.Paper],
-        () => [RPS.Paper, RPS.Rock] as [RPS, RPS]
-      )
-      .with(
-        [GameState.Win, RPS.Paper],
-        () => [RPS.Paper, RPS.Scissors] as [RPS, RPS]
-      )
+      .with([GameState.Lose, RPS.Paper], () => [RPS.Paper, RPS.Rock])
+      .with([GameState.Win, RPS.Paper], () => [RPS.Paper, RPS.Scissors])
       //Scissors
-      .with(
-        [GameState.Lose, RPS.Scissors],
-        () => [RPS.Scissors, RPS.Paper] as [RPS, RPS]
-      )
-      .with(
-        [GameState.Win, RPS.Scissors],
-        () => [RPS.Scissors, RPS.Rock] as [RPS, RPS]
-      )
+      .with([GameState.Lose, RPS.Scissors], () => [RPS.Scissors, RPS.Paper])
+      .with([GameState.Win, RPS.Scissors], () => [RPS.Scissors, RPS.Rock])
       .otherwise(() => null),
-    E.fromNullable("unknown error with strategy selection")
-  ); // not safe
+    E.fromNullable("unknown error with strategy selection"),
+    E.map((x) => [x[0], x[1]] as [RPS, RPS])
+  );
