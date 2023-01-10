@@ -1,7 +1,8 @@
-import { pipe, flow } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import * as E from "fp-ts/lib/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
+import * as S from "fp-ts/lib/string";
 import fs from "fs";
 import { promisify } from "util";
 
@@ -39,10 +40,17 @@ const small_letters = RA.makeBy(26, (i: number) =>
 const big_letters = RA.makeBy(26, (i: number) =>
   String.fromCharCode("A".charCodeAt(0) + i)
 );
-const letters = RA.concat(big_letters)(small_letters);
+export const letters = RA.concat(big_letters)(small_letters);
 
 export const getLetterIndex = (letter: string) =>
   pipe(
     letters,
     RA.findIndex((l) => l === letter)
+  );
+
+export const findCommonLetter = (items: readonly (readonly string[])[]) =>
+  pipe(
+    items,
+    RA.reduce(letters, (curr, acc) => RA.intersection(S.Eq)(acc)(curr)),
+    RA.head
   );

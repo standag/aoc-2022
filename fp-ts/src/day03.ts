@@ -5,7 +5,12 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as RNA from "fp-ts/lib/ReadonlyNonEmptyArray";
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
-import { getFileContentV2, getLetterIndex, RNAsum } from "./lib";
+import {
+  findCommonLetter,
+  getFileContentV2,
+  getLetterIndex,
+  RNAsum,
+} from "./lib";
 
 export const solveSolvePartOne = () =>
   pipe("../input/day03.txt", getFileContentV2, TE.chainEitherKW(solvePartOne));
@@ -50,27 +55,16 @@ const ruckSackScore = (items: string) =>
   pipe(
     items,
     halve,
-    (h) => RA.intersection(S.Eq)(h[0])(h[1]),
-    RA.head,
+    findCommonLetter,
     E.fromOption(() => "no common item in rucksack" as const),
     E.chainW(itemScore)
-  );
-
-const findCommon = (
-  groupRuckSacks: readonly RNA.ReadonlyNonEmptyArray<string>[]
-) =>
-  pipe(
-    groupRuckSacks[0],
-    RA.intersection(S.Eq)(groupRuckSacks[1]),
-    RA.intersection(S.Eq)(groupRuckSacks[2]),
-    RA.head
   );
 
 const groupBadgeScore = (groupRuckSacks: readonly string[]) =>
   pipe(
     groupRuckSacks,
     RA.map(S.split("")),
-    findCommon,
+    findCommonLetter,
     E.fromOption(() => "no common item in group rucksacks" as const),
     E.chainW(itemScore)
   );
